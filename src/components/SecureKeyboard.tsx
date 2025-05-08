@@ -3,6 +3,7 @@ import "./SecureKeyboard.css";
 
 type VirtualKeyboardProps = {
   mode: number;
+  setInputVal: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const KEYBOARD_tmp: Array<Array<string>> = [
@@ -21,9 +22,19 @@ const KEYBOARD: Array<Array<string>> = [
   ["한/영", "↺", "↵"],
 ];
 
-const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ mode }) => {
+const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
+  mode,
+  setInputVal,
+}) => {
+  console.log("VirtualKeyboard rendering");
   const [keyBoardDatas, setKeyBoardDatas] =
     useState<Array<Array<string>>>(KEYBOARD_tmp); // " "문자가 없을 때 레이아웃이 무너짐으로 tmp를 초기값으로 한다.
+
+  const keyClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    setInputVal((prev) => {
+      return prev + e.currentTarget.textContent;
+    });
+  };
 
   useEffect(() => {
     setKeyBoardDatas((_) => {
@@ -43,7 +54,7 @@ const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ mode }) => {
       <div className="container">
         {keyBoardDatas.map((charList, row) => {
           return charList.map((char, col) => (
-            <div key={row * 11 + col} className="item">
+            <div key={row * 11 + col} className="item" onClick={keyClick}>
               {char}
             </div>
           ));
