@@ -5,6 +5,14 @@ type VirtualKeyboardProps = {
   mode: number;
 };
 
+const KEYBOARD_tmp: Array<Array<string>> = [
+  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", " "],
+  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", " "],
+  ["a", "s", "d", "f", "g", "h", "j", "k", "l", " "],
+  ["⇧", "z", "x", "c", "v", "b", "n", "m", " ", " ", "⌫"],
+  ["한/영", "↺", "↵"],
+];
+
 const KEYBOARD: Array<Array<string>> = [
   ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -15,17 +23,18 @@ const KEYBOARD: Array<Array<string>> = [
 
 const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ mode }) => {
   const [keyBoardDatas, setKeyBoardDatas] =
-    useState<Array<Array<string>>>(KEYBOARD);
+    useState<Array<Array<string>>>(KEYBOARD_tmp); // " "문자가 없을 때 레이아웃이 무너짐으로 tmp를 초기값으로 한다.
 
-  // 첫 랜더링에서 공백 문제를 랜덤하게 넣자.
   useEffect(() => {
-    setKeyBoardDatas(KEYBOARD);
-    keyBoardDatas[0].splice(Math.floor(Math.random() * 11), 0, " ");
-    keyBoardDatas[1].splice(Math.floor(Math.random() * 11), 0, " ");
-    keyBoardDatas[2].splice(Math.floor(Math.random() * 11), 0, " ");
-    keyBoardDatas[2].splice(Math.floor(Math.random() * 12), 0, " ");
-    keyBoardDatas[3].splice(Math.floor(Math.random() * 8 + 1), 0, " ");
-    setKeyBoardDatas(keyBoardDatas);
+    setKeyBoardDatas((_) => {
+      let tmp = [...KEYBOARD];
+      tmp[0].splice(Math.floor(Math.random() * 11), 0, " ");
+      tmp[1].splice(Math.floor(Math.random() * 11), 0, " ");
+      tmp[2].splice(Math.floor(Math.random() * 11), 0, " ");
+      tmp[2].splice(Math.floor(Math.random() * 12), 0, " ");
+      tmp[3].splice(Math.floor(Math.random() * 8 + 1), 0, " ");
+      return tmp;
+    });
   }, []);
 
   return (
