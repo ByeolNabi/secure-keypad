@@ -6,47 +6,49 @@ type VirtualKeyboardProps = {
   setInputVal: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const KEYBOARD_tmp: Array<Array<string>> = [
-  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", " "],
-  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", " "],
-  ["a", "s", "d", "f", "g", "h", "j", "k", "l", " "],
-  ["⇧", "z", "x", "c", "v", "b", "n", "m", " ", " ", "⌫"],
-  ["한/영", "↺", "↵"],
-];
+// const KEYBOARD_tmp: Array<Array<string>> = [
+//   ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", " "],
+//   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", " "],
+//   ["a", "s", "d", "f", "g", "h", "j", "k", "l", " "],
+//   ["⇧", "z", "x", "c", "v", "b", "n", "m", " ", " ", "⌫"],
+//   ["한/영", "↺", "↵"],
+// ];
 
-const KEYBOARD: Array<Array<string>> = [
-  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-  ["⇧", "z", "x", "c", "v", "b", "n", "m", "⌫"],
-  ["한/영", "↺", "↵"],
-];
+// const KEYBOARD: Array<Array<string>> = [
+//   ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+//   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+//   ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+//   ["⇧", "z", "x", "c", "v", "b", "n", "m", "⌫"],
+//   ["한/영", "↺", "↵"],
+// ];
 
 const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
   mode,
   setInputVal,
 }) => {
-  console.log("VirtualKeyboard rendering");
-  const [keyBoardDatas, setKeyBoardDatas] =
-    useState<Array<Array<string>>>(KEYBOARD_tmp); // " "문자가 없을 때 레이아웃이 무너짐으로 tmp를 초기값으로 한다.
+  const KEYBOARD: Array<Array<string>> = [
+    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+    ["⇧", "z", "x", "c", "v", "b", "n", "m", "⌫"],
+    ["한/영", "↺", "↵"],
+  ];
+  let keyBoardDatas = KEYBOARD;
+  keyBoardDatas[0].splice(Math.floor(Math.random() * 11), 0, " ");
+  keyBoardDatas[1].splice(Math.floor(Math.random() * 11), 0, " ");
+  keyBoardDatas[2].splice(Math.floor(Math.random() * 11), 0, " ");
+  keyBoardDatas[2].splice(Math.floor(Math.random() * 12), 0, " ");
+  keyBoardDatas[3].splice(Math.floor(Math.random() * 8 + 1), 0, " ");
 
   const keyClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    console.log("[keyClick] : start");
+    const char = e.currentTarget.textContent;
     setInputVal((prev) => {
-      return prev + e.currentTarget.textContent;
+      console.log("[setInputVal] in keyClick : start!");
+      return prev + char;
     });
+    console.log("[keyClick] : end");
   };
-
-  useEffect(() => {
-    setKeyBoardDatas((_) => {
-      let tmp = [...KEYBOARD];
-      tmp[0].splice(Math.floor(Math.random() * 11), 0, " ");
-      tmp[1].splice(Math.floor(Math.random() * 11), 0, " ");
-      tmp[2].splice(Math.floor(Math.random() * 11), 0, " ");
-      tmp[2].splice(Math.floor(Math.random() * 12), 0, " ");
-      tmp[3].splice(Math.floor(Math.random() * 8 + 1), 0, " ");
-      return tmp;
-    });
-  }, []);
 
   return (
     <>
