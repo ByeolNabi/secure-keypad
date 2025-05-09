@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./SecureKeyboard.css";
 
 type VirtualKeyboardProps = {
@@ -33,7 +33,7 @@ const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
     ["⇧", "z", "x", "c", "v", "b", "n", "m", "⌫"],
     ["한/영", "↺", "↵"],
   ];
-  let keyBoardDatas = KEYBOARD;
+  const keyBoardDatas = KEYBOARD;
   keyBoardDatas[0].splice(Math.floor(Math.random() * 11), 0, " ");
   keyBoardDatas[1].splice(Math.floor(Math.random() * 11), 0, " ");
   keyBoardDatas[2].splice(Math.floor(Math.random() * 11), 0, " ");
