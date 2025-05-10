@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <>
       <input type="text" value={txt} />
-      <VirtualKeyboard mode={1} setInputVal={setTxt} />
+      <VirtualKeyboard setInputVal={setTxt} />
     </>
   );
 };
